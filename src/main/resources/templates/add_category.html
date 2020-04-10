@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Категории</title>
+</head>
+<br>
+
+
+<div class="container">
+    <div class="col col-lg-6">
+        <form enctype="multipart/form-data" action="#" th:action="@{/add_category}" th:object="${category}" method="post" class="needs-validation"
+              novalidate>
+            <div class="row">
+                <div class="col-md-5 mb-3">
+                    <label for="nameCategory">Название новой категории</label>
+                    <input th:field="*{nameCategory}" type="text" class="form-control" id="nameCategory" placeholder="Введите название"
+                           value="" required>
+                </div>
+                <button class="btn btn-dark btn-lg btn-block" type="submit" value="Submit">Добавить категорию</button>
+            </div>
+        </form>
+    </div>
+</div>
+<br/><br/><br/>
+<div class="col col-lg-12">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="text-justify">#</th>
+            <th class="text-justify">Название</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td class="align-middle"><span th:text="${category.id}"/></td>
+            <td class="align-middle"><span th:text="${category.nameCategory}"/></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
