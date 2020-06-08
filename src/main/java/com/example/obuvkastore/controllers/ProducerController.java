@@ -19,25 +19,31 @@ public class ProducerController {
         this.producerService = producerService;
     }
 
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("producers", producerService.getAllProducers());
-        return "producer";
+
+    @GetMapping("/admin/")
+    public String indexAdmin(Model model) {
+        return "admin/admin_index";
     }
 
-    @GetMapping("/add_producer")
+    @GetMapping("/admin/producers")
+    public String showProducers(Model model) {
+        model.addAttribute("producers", producerService.getAllProducers());
+        return "admin/producer";
+    }
+
+    @GetMapping("/admin/add_producer")
     public String addProducer(Model model) {
         model.addAttribute("producer", new Producer());
-        return "add_producer";
+        return "admin/add_producer";
     }
 
-    @PostMapping("/add_producer")
+    @PostMapping("/admin/add_producer")
     public String addProducerSubmit(@Valid Producer producer, BindingResult result) {
         if (result.hasErrors()) {
-            return "add_producer";
+            return "admin/add_producer";
         } else {
             producerService.saveProducer(producer);
-            return "redirect:/";
+            return "redirect:/admin/producers";
         }
     }
 

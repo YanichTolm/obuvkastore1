@@ -18,21 +18,21 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/admin/categories")
     public String addCategory(Model model) {
         model.addAttribute("category", new Category());
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "add_category";
+        return "admin/add_category";
     }
 
 
-    @PostMapping("/add_category")
-    public String addProducerSubmit(@Valid Category category, BindingResult result) {
+    @PostMapping("/admin/add_category")
+    public String addCategorySubmit(@Valid Category category, BindingResult result) {
         if (result.hasErrors()) {
-            return "add_category";
+            return "admin/add_category";
         } else {
             categoryService.saveCategory(category);
-            return "redirect:/categories";
+            return "redirect:/admin/categories";
         }
     }
 }

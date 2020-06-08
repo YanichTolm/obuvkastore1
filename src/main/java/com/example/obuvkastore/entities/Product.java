@@ -1,6 +1,10 @@
 package com.example.obuvkastore.entities;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
+import java.io.IOException;
+import java.util.List;
 
 
 @Entity
@@ -20,23 +24,27 @@ public class Product {
     @JoinColumn(name = "id_category", nullable = false)
     private Category category;
 
+
     @Column(name = "name_of_product")
     private String nameProduct;
     private Float price;
-    private boolean male_female;
+    @Column(name = "male_female")
+    private String male_female;
     private String sizes;
-
-    //TODO
     private byte[] image;
 
-    public Product(Producer producer, Category category, String nameProduct, Float price, boolean male_female, String sizes, byte[] image) {
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Order> orders;
+
+    public Product(Producer producer, Category category, String nameProduct, Float price, String male_female, String sizes, MultipartFile image) throws IOException {
         this.producer = producer;
         this.category = category;
         this.nameProduct = nameProduct;
         this.price = price;
         this.male_female = male_female;
         this.sizes = sizes;
-        this.image = image;
+        setImage(image);
     }
 
     public Product() {
@@ -82,11 +90,11 @@ public class Product {
         this.price = price;
     }
 
-    public boolean isMale_female() {
+    public String getMale_female() {
         return male_female;
     }
 
-    public void setMale_female(boolean male_female) {
+    public void setMale_female(String male_female) {
         this.male_female = male_female;
     }
 
@@ -102,7 +110,7 @@ public class Product {
         return image;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImage(MultipartFile image) throws IOException {
+        this.image = image.getBytes();
     }
 }
